@@ -1,18 +1,13 @@
 package com.company;
 
 // Кастомна черга. Нічого особливого, почитати про чергу можна тут https://javarush.com/quests/lectures/jru.module1.lecture23
-public class Queue<T> {
+public class QueueCustom<T> {
 
     private Object[] elements;
-    private static final int capacityDefault = 5;
     private int size;
 
-    public Queue(int capacity){
-        elements = new Object[capacity];
-    }
-
-    public Queue(){
-        elements = new Object[capacityDefault];
+    public QueueCustom(){
+        elements = new Object[1];
     }
 
     public T get(int index){
@@ -23,8 +18,7 @@ public class Queue<T> {
         if(e == null){
             throw new NullPointerException();
         }
-
-        if(size == capacityDefault){
+        if(size >= 1){
             resizeGrow();
         }
         elements[size] = e;
@@ -32,20 +26,27 @@ public class Queue<T> {
     }
 
     private void resizeGrow() {
-        Object[] arr = new Object[elements.length * 2];
-        System.arraycopy(elements, 0, arr, 0, size);
+        Object[] arr = new Object[elements.length + 1];
+        for(int i = 0; i < elements.length; i++){
+            arr[i] = elements[i];
+        }
         elements = arr;
     }
 
     private void resizeCut() {
         Object[] arr = new Object[elements.length - 1];
-        System.arraycopy(elements, 1, arr, 0, size - 1);
+        for (int i = 0; i < elements.length - 1; i++) {
+            arr[i] = elements[i + 1];
+        }
         elements = arr;
     }
 
     public T poll(){
         T el = (T) elements[0];
         resizeCut();
+        if(size == 1){
+            elements = new Object[1];
+        }
         size--;
         return el;
     }

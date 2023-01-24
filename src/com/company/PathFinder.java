@@ -1,18 +1,18 @@
 package com.company;
 
-import java.util.ArrayDeque;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
+
 
 public class PathFinder {
 
     private Matrix matrix;
     private boolean[][] visited;
-    private Queue<Integer> queue_x = new ArrayDeque<>();
-    private Queue<Integer> queue_y = new ArrayDeque<>();
+    private QueueCustom<Integer> queue_x = new QueueCustom<>();
+    private QueueCustom<Integer> queue_y = new QueueCustom<>();
     private Map<Node, List<Node>> map = new HashMap<>();
 
     private int[] direct_x = {-1, 1, 0, 0};
@@ -29,8 +29,7 @@ public class PathFinder {
         queue_x.add(matrix.getStartNode().x);
         queue_y.add(matrix.getStartNode().y);
         visited[matrix.getStartNode().x][matrix.getStartNode().y] = true;
-
-        while (!queue_x.isEmpty()){
+        while (queue_x.size() != 0){
             Integer x = queue_x.poll();
             Integer y = queue_y.poll();
 
